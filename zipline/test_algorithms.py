@@ -191,7 +191,7 @@ class TooMuchProcessingAlgorithm(TradingAlgorithm):
     def handle_data(self, data):
         # Unless we're running on some sort of
         # supercomputer this will hit timeout.
-        for i in xrange(1000000000):
+        for i in range(1000000000):
             self.foo = i
 
 
@@ -409,7 +409,7 @@ class BatchTransformAlgorithm(TradingAlgorithm):
                 self.return_nan.handle_data(data))
         else:
             nan_data = deepcopy(data)
-            for sid in nan_data.iterkeys():
+            for sid in nan_data.keys():
                 nan_data[sid].price = np.nan
             self.history_return_nan.append(
                 self.return_nan.handle_data(nan_data))

@@ -111,7 +111,7 @@ class TradingEnvironment(object):
                     self.trading_day_map[extra_date] = \
                         self.trading_day_map[last_day]
 
-        self.first_trading_day = next(self.trading_day_map.iterkeys())
+        self.first_trading_day = next(iter(self.trading_day_map.keys()))
         self.last_trading_day = next(reversed(self.trading_day_map))
 
     def __enter__(self, *args, **kwargs):
@@ -149,7 +149,7 @@ class TradingEnvironment(object):
     def trading_days(self):
         if self._trading_days_series is None:
             self._trading_days_series = \
-                DatetimeIndex(self.trading_day_map.iterkeys())
+                DatetimeIndex(iter(self.trading_day_map.keys()))
         return self._trading_days_series
 
     def is_market_hours(self, test_date):
@@ -220,7 +220,7 @@ Last successful date: %s" % self.last_trading_day)
         first_date = self.normalize_date(first_date)
         second_date = self.normalize_date(second_date)
 
-        trading_days = self.trading_day_map.keys()
+        trading_days = list(self.trading_day_map.keys())
         # Find leftmost item greater than or equal to day
         i = bisect.bisect_left(trading_days, first_date)
         if i == len(trading_days):  # nothing found

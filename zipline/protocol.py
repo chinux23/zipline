@@ -15,7 +15,7 @@
 from collections import defaultdict
 import datetime
 
-from utils.protocol_utils import Enum
+from .utils.protocol_utils import Enum
 
 # Datasource type should completely determine the other fields of a
 # message with its type.
@@ -50,7 +50,7 @@ class Event(object):
         delattr(self, name)
 
     def keys(self):
-        return self.__dict__.keys()
+        return list(self.__dict__.keys())
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
@@ -164,22 +164,22 @@ class BarData(object):
         del self._data[name]
 
     def __iter__(self):
-        return self._data.iterkeys()
+        return iter(self._data.keys())
 
     def keys(self):
-        return self._data.keys()
+        return list(self._data.keys())
 
     def iterkeys(self):
-        return self._data.iterkeys()
+        return iter(self._data.keys())
 
     def itervalues(self):
-        return self._data.itervalues()
+        return iter(self._data.values())
 
     def iteritems(self):
-        return self._data.iteritems()
+        return iter(self._data.items())
 
     def items(self):
-        return self._data.items()
+        return list(self._data.items())
 
 
 class DailyReturn(object):

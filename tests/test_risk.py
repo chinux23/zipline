@@ -487,8 +487,8 @@ class TestRisk(unittest.TestCase):
     #re-enable variance, alpha, and beta tests once this is resolved
     def dtest_algorithm_covariance_06(self):
         metric = self.metrics_06.month_periods[3]
-        print repr(metric)
-        print "----"
+        print(repr(metric))
+        print("----")
         self.assertEqual([round(x.algorithm_covariance, 7)
                           for x in self.metrics_06.month_periods],
                          [0.0000289,

@@ -293,7 +293,7 @@ class TestEventsThroughRisk(unittest.TestCase):
 
         crm = algo.perf_tracker.cumulative_risk_metrics
 
-        first_msg = gen.next()
+        first_msg = next(gen)
 
         self.assertIsNotNone(first_msg, "There should be a message emitted.")
 
@@ -307,7 +307,7 @@ class TestEventsThroughRisk(unittest.TestCase):
             np.isnan(crm.algorithm_volatility[-1]),
             "On the first day algorithm volatility does not exist.")
 
-        second_msg = gen.next()
+        second_msg = next(gen)
 
         self.assertIsNotNone(second_msg, "There should be a message emitted.")
 
@@ -320,7 +320,7 @@ class TestEventsThroughRisk(unittest.TestCase):
             crm.algorithm_returns[-1],
             decimal=6)
 
-        third_msg = gen.next()
+        third_msg = next(gen)
 
         self.assertEqual(1, len(algo.portfolio.positions),
                          "Number of positions should stay the same.")

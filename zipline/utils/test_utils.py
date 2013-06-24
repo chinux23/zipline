@@ -1,7 +1,7 @@
 from datetime import datetime
 import blist
 from zipline.utils.date_utils import EPOCH
-from itertools import izip_longest
+from itertools import zip_longest
 from logbook import FileHandler
 from zipline.finance.blotter import ORDER_STATUS
 
@@ -19,7 +19,7 @@ def teardown_logger(test):
 def check_list(test, a, b, label):
     test.assertIsInstance(a, (list, blist.blist), "not list at: " + label)
     test.assertIsInstance(b, (list, blist.blist), "not list at: " + label)
-    for i, (a_val, b_val) in enumerate(izip_longest(a, b)):
+    for i, (a_val, b_val) in enumerate(zip_longest(a, b)):
         check(test, a_val, b_val, label + "[" + str(i) + "]")
 
 
@@ -101,7 +101,7 @@ def assert_single_position(test, zipline):
                 for order in update['daily_perf']['orders']:
                     orders_by_id[order['id']] = order
 
-    for order in orders_by_id.itervalues():
+    for order in orders_by_id.values():
         test.assertEqual(
             order['status'],
             ORDER_STATUS.FILLED,
@@ -134,7 +134,7 @@ class ExceptionSource(object):
     def __iter__(self):
         return self
 
-    def next(self):
+    def __next__(self):
         5 / 0
 
 

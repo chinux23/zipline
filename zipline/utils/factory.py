@@ -104,7 +104,7 @@ def create_random_simulation_parameters():
             len(treasury_curves) - 1
         )
 
-        start_dt = treasury_curves.keys()[random_index]
+        start_dt = list(treasury_curves.keys())[random_index]
         end_dt = start_dt + timedelta(days=365)
 
         now = datetime.utcnow().replace(tzinfo=pytz.utc)
@@ -404,13 +404,13 @@ must specify stocks or indexes"""
 
     if stocks is not None:
         for stock in stocks:
-            print stock
+            print(stock)
             stkd = DataReader(stock, 'yahoo', start, end).sort_index()
             data[stock] = stkd
 
     if indexes is not None:
-        for name, ticker in indexes.iteritems():
-            print name
+        for name, ticker in indexes.items():
+            print(name)
             stkd = DataReader(ticker, 'yahoo', start, end).sort_index()
             data[name] = stkd
 
@@ -447,7 +447,7 @@ def load_from_yahoo(indexes=None,
         close_key = 'Adj Close'
     else:
         close_key = 'Close'
-    df = pd.DataFrame({key: d[close_key] for key, d in data.iteritems()})
+    df = pd.DataFrame({key: d[close_key] for key, d in data.items()})
     df.index = df.index.tz_localize(pytz.utc)
     return df
 

@@ -20,7 +20,7 @@ import numpy as np
 
 from datetime import datetime
 
-from itertools import groupby, ifilter
+from itertools import groupby
 from operator import attrgetter
 
 from zipline.errors import (
@@ -186,7 +186,7 @@ class TradingAlgorithm(object):
         date_sorted = date_sorted_sources(*self.sources)
 
         if source_filter:
-            date_sorted = ifilter(source_filter, date_sorted)
+            date_sorted = filter(source_filter, date_sorted)
 
         with_tnfms = sequential_transforms(date_sorted,
                                            *self.transforms)
@@ -292,7 +292,7 @@ class TradingAlgorithm(object):
 
         # Create transforms by wrapping them into StatefulTransforms
         self.transforms = []
-        for namestring, trans_descr in self.registered_transforms.iteritems():
+        for namestring, trans_descr in self.registered_transforms.items():
             sf = StatefulTransform(
                 trans_descr['class'],
                 *trans_descr['args'],
@@ -361,7 +361,7 @@ class TradingAlgorithm(object):
         """
         Track and record local variable (i.e. attributes) each day.
         """
-        for name, value in kwargs.items():
+        for name, value in list(kwargs.items()):
             self._recorded_vars[name] = value
 
     def order(self, sid, amount, limit_price=None, stop_price=None):

@@ -28,7 +28,7 @@ def make_transform(talib_fn, name):
     talib_docs = getattr(talib, talib_fn.info['name']).__doc__
     divider1 = '\n#---- Default mapping (TA-Lib : Zipline)\n\n'
     mappings = '\n'.join('        {0} : {1}'.format(k, v)
-                         for k, v in talib_fn.input_names.items())
+                         for k, v in list(talib_fn.input_names.items()))
     divider2 = '\n\n#---- Zipline docs\n'
     help_str = (header + talib_docs + divider1 + mappings
                 + divider2)
@@ -116,7 +116,7 @@ def make_transform(talib_fn, name):
             self.talib_fn = copy.deepcopy(talib_fn)
 
             # set the parameters
-            for param in self.talib_fn.get_parameters().keys():
+            for param in list(self.talib_fn.get_parameters().keys()):
                 if param in kwargs:
                     self.talib_fn.set_parameters({param: kwargs[param]})
 
@@ -134,7 +134,7 @@ def make_transform(talib_fn, name):
 
                 # build talib_data from zipline data
                 talib_data = dict()
-                for talib_key, zipline_key in key_map.iteritems():
+                for talib_key, zipline_key in key_map.items():
                     # if zipline_key is found, add it to talib_data
                     if zipline_key in data:
                         talib_data[talib_key] = data[zipline_key].values[:, 0]

@@ -47,8 +47,8 @@ DATA_SOURCES = {
 def last_date(source_name, args):
     data = loader.get_saved_data(DATA_SOURCES[source_name]['filename'])
     date = tuple_to_date(data[-1][0])
-    print "Last saved {source_name} date is {date}".format(
-        source_name=source_name, date=date)
+    print("Last saved {source_name} date is {date}".format(
+        source_name=source_name, date=date))
 
 
 def drop_before_date(source_name, last_date):
@@ -101,8 +101,8 @@ def _make_parser():
     parser.add_argument('action')
     parser.add_argument('--data-source',
                         action='append',
-                        choices=DATA_SOURCES.keys(),
-                        default=DATA_SOURCES.keys())
+                        choices=list(DATA_SOURCES.keys()),
+                        default=list(DATA_SOURCES.keys()))
     parser.add_argument('--last-date')
     return parser
 

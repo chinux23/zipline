@@ -26,7 +26,7 @@ import zipline.finance.trading as trading
 from zipline.finance.trading import SimulationParameters
 from zipline.protocol import DailyReturn
 
-from test_risk import RETURNS
+from .test_risk import RETURNS
 
 
 class RiskCompareIterativeToBatch(unittest.TestCase):
@@ -130,7 +130,7 @@ class RiskCompareIterativeToBatch(unittest.TestCase):
             err_msg_format = """\
 "In update step {iter}: {measure} should be {truth} but is {returned}!"""
 
-            for measure in risk_original_dict.iterkeys():
+            for measure in risk_original_dict.keys():
                 if measure == 'max_drawdown':
                     np.testing.assert_almost_equal(
                         risk_refactor_dict[measure],

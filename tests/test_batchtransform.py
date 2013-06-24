@@ -65,7 +65,7 @@ class DifferentSidSource(DataSource):
         self.start = self.dates[0]
         self.end = self.dates[-1]
         self._raw_data = None
-        self.sids = range(90)
+        self.sids = list(range(90))
         self.sid = 0
         self.trading_days = []
 
@@ -104,7 +104,7 @@ class DifferentSidSource(DataSource):
 
 class TestChangeOfSids(TestCase):
     def setUp(self):
-        self.sids = range(90)
+        self.sids = list(range(90))
         self.sim_params = factory.create_simulation_parameters(
             start=datetime(1990, 1, 1, tzinfo=pytz.utc),
             end=datetime(1990, 1, 8, tzinfo=pytz.utc)
@@ -114,7 +114,7 @@ class TestChangeOfSids(TestCase):
         algo = BatchTransformAlgorithmSetSid(sim_params=self.sim_params)
         source = DifferentSidSource()
         algo.run(source)
-        for i, (df, date) in enumerate(zip(algo.history, source.trading_days)):
+        for i, (df, date) in enumerate(list(zip(algo.history, source.trading_days))):
             self.assertEqual(df.index[-1], date, "Newest event doesn't \
                              match.")
 
@@ -231,7 +231,7 @@ class TestBatchTransform(TestCase):
             # consecutive (of window length) numbers up till the end.
             for i in range(algo.window_length, len(test_history)):
                 np.testing.assert_array_equal(
-                    range(i - algo.window_length + 1, i + 1),
+                    list(range(i - algo.window_length + 1, i + 1)),
                     test_history[i].values.flatten()
                 )
 

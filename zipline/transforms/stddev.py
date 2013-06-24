@@ -21,14 +21,13 @@ from zipline.transforms.utils import EventWindow, TransformMeta
 import zipline.utils.math_utils as zp_math
 
 
-class MovingStandardDev(object):
+class MovingStandardDev(object, metaclass=TransformMeta):
     """
     Class that maintains a dictionary from sids to
     MovingStandardDevWindows.  For each sid, we maintain a the
     standard deviation of all events falling within the specified
     window.
     """
-    __metaclass__ = TransformMeta
 
     def __init__(self, market_aware=True, window_length=None, delta=None):
 

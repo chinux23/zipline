@@ -19,7 +19,7 @@ import requests
 from collections import OrderedDict
 import xml.etree.ElementTree as ET
 
-from loader_utils import (
+from .loader_utils import (
     guarded_conversion,
     safe_int,
     Mapping,
@@ -59,7 +59,7 @@ _CURVE_MAPPINGS = {
 def treasury_mappings():
     return {key: Mapping(*value)
             for key, value
-            in _CURVE_MAPPINGS.iteritems()}
+            in _CURVE_MAPPINGS.items()}
 
 
 class iter_to_stream(object):

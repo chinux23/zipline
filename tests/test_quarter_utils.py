@@ -30,8 +30,8 @@ class DateUtilsQuarterTests(TestCase):
     def test_dates_quarter_inverses(self):
         last_quarter = None
 
-        for y in xrange(1900, 2050):
-            for m in xrange(1, 13):
+        for y in range(1900, 2050):
+            for m in range(1, 13):
 
                 dt = datetime.datetime(y, m, 1, tzinfo=pytz.utc)
 

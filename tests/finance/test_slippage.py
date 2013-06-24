@@ -134,7 +134,7 @@ class SlippageTestCase(TestCase):
 
         self.assertIsNotNone(txn)
 
-        for key, value in expected_txn.items():
+        for key, value in list(expected_txn.items()):
             self.assertEquals(value, txn[key])
 
         # short, does not trade
@@ -186,7 +186,7 @@ class SlippageTestCase(TestCase):
 
         self.assertIsNotNone(txn)
 
-        for key, value in expected_txn.items():
+        for key, value in list(expected_txn.items()):
             self.assertEquals(value, txn[key])
 
     def test_orders_stop(self):
@@ -241,7 +241,7 @@ class SlippageTestCase(TestCase):
             'order_id': open_orders[0].id
         }
 
-        for key, value in expected_txn.items():
+        for key, value in list(expected_txn.items()):
             self.assertEquals(value, txn[key])
 
         # short, does not trade
@@ -289,7 +289,7 @@ class SlippageTestCase(TestCase):
             'sid': int(133)
         }
 
-        for key, value in expected_txn.items():
+        for key, value in list(expected_txn.items()):
             self.assertEquals(value, txn[key])
 
     def test_orders_stop_limit(self):
@@ -358,7 +358,7 @@ class SlippageTestCase(TestCase):
             'sid': int(133)
         }
 
-        for key, value in expected_txn.items():
+        for key, value in list(expected_txn.items()):
             self.assertEquals(value, txn[key])
 
         # short, does not trade
@@ -422,7 +422,7 @@ class SlippageTestCase(TestCase):
             'sid': int(133)
         }
 
-        for key, value in expected_txn.items():
+        for key, value in list(expected_txn.items()):
             self.assertEquals(value, txn[key])
 
     def gen_trades(self):

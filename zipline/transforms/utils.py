@@ -100,7 +100,7 @@ class StatefulTransform(object):
     Otherwise only dt, tnfm_id, and tnfm_value are forwarded.
     """
     def __init__(self, tnfm_class, *args, **kwargs):
-        assert isinstance(tnfm_class, (types.ObjectType, types.ClassType)), \
+        assert isinstance(tnfm_class, (object, type)), \
             "Stateful transform requires a class."
         assert hasattr(tnfm_class, 'update'), \
             "Stateful transform requires the class to have an update method"
@@ -161,7 +161,7 @@ class StatefulTransform(object):
         log.debug('Finished StatefulTransform [%s]' % self.get_hash())
 
 
-class EventWindow(object):
+class EventWindow(object, metaclass=ABCMeta):
     """
     Abstract base class for transform classes that calculate iterative
     metrics on events within a given timedelta.  Maintains a list of
@@ -179,8 +179,6 @@ class EventWindow(object):
     implementations of moving average and volume-weighted average
     price.
     """
-    # Mark this as an abstract base class.
-    __metaclass__ = ABCMeta
 
     def __init__(self, market_aware=True, window_length=None, delta=None):
 
@@ -366,7 +364,7 @@ class BatchTransform(object):
         # enter the batch transform's window IFF a sid filter is not
         # specified.
         if sids is not None:
-            if isinstance(sids, (basestring, Integral)):
+            if isinstance(sids, (str, Integral)):
                 self.static_sids = set([sids])
             else:
                 self.static_sids = set(sids)
@@ -374,7 +372,7 @@ class BatchTransform(object):
             self.static_sids = None
 
         self.initial_field_names = fields
-        if isinstance(self.initial_field_names, basestring):
+        if isinstance(self.initial_field_names, str):
             self.initial_field_names = [self.initial_field_names]
         self.field_names = set()
 
@@ -416,7 +414,7 @@ class BatchTransform(object):
         # sid keys.
         event = Event()
         event.dt = max(dts)
-        event.data = {k: v.__dict__ for k, v in data.iteritems()
+        event.data = {k: v.__dict__ for k, v in data.items()
                       # Need to check if data has a 'length' to filter
                       # out sids without trade data available.
                       # TODO: expose more of 'no trade available'
@@ -559,8 +557,8 @@ class BatchTransform(object):
         # extract field names from sids (price, volume etc), make sure
         # every sid has the same fields.
         sid_keys = []
-        for sid in event.data.itervalues():
-            keys = set([name for name, value in sid.items()
+        for sid in event.data.values():
+            keys = set([name for name, value in list(sid.items())
                         if isinstance(value,
                                       (int,
                                        float,

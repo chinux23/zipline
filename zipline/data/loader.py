@@ -22,9 +22,9 @@ from datetime import timedelta
 
 import logbook
 
-from treasuries import get_treasury_data
-import benchmarks
-from benchmarks import get_benchmark_returns
+from .treasuries import get_treasury_data
+from . import benchmarks
+from .benchmarks import get_benchmark_returns
 
 from zipline.protocol import DailyReturn
 from zipline.utils.date_utils import tuple_to_date
@@ -156,10 +156,10 @@ def load_market_data(bm_symbol='^GSPC'):
     try:
         fp_bm = get_datafile(get_benchmark_filename(bm_symbol), "rb")
     except IOError:
-        print """
+        print("""
 data msgpacks aren't distributed with source.
 Fetching data from Yahoo Finance.
-""".strip()
+""".strip())
         dump_benchmarks(bm_symbol)
         fp_bm = get_datafile(get_benchmark_filename(bm_symbol), "rb")
 
@@ -192,10 +192,10 @@ Fetching data from Yahoo Finance.
     try:
         fp_tr = get_datafile('treasury_curves.msgpack', "rb")
     except IOError:
-        print """
+        print("""
 data msgpacks aren't distributed with source.
 Fetching data from data.treasury.gov
-""".strip()
+""".strip())
         dump_treasury_curves()
         fp_tr = get_datafile('treasury_curves.msgpack', "rb")
 
@@ -224,7 +224,7 @@ Fetching data from data.treasury.gov
     fp_tr.close()
 
     tr_curves = OrderedDict(sorted(
-                            ((dt, c) for dt, c in tr_curves.iteritems()),
+                            ((dt, c) for dt, c in tr_curves.items()),
                             key=lambda t: t[0]))
 
     return bm_returns, tr_curves
